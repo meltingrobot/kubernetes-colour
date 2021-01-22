@@ -1,0 +1,17 @@
+#!/bin/bash
+RESTORE=$(echo -en '\033[0m')
+RED=$(echo -en '\033[00;31m')
+GREEN=$(echo -en '\033[00;32m')
+YELLOW=$(echo -en '\033[00;33m')
+BLUE=$(echo -en '\033[00;34m')
+MAGENTA=$(echo -en '\033[00;35m')
+
+PRECOLOUR=`kubectl $@`
+if [[ $@ == *"get pod"* ]]; then
+  echo -en "${PRECOLOUR}\n"|sed "s/Running/${GREEN}Running${RESTORE}/g"|sed "s/Evicted/${RED}Evicted${RESTORE}/g"|sed "s/Terminating/${MAGENTA}Terminating${RESTORE}/g"|sed "s/Unknown/${RED}Unknown${RESTORE}/g"|sed "s/Pending/${MAGENTA}Pending${MAGENTA}/g"|sed "s/ImagePullBackoff/${RED}ImagePullBackoff${RESTORE}/g"|sed "s/CrashLoopBackoff/${RED}CrashLoopBackoff${RESTORE}/g"
+  exit 0
+elif [[ $@ == *"get node"* ]]; then
+  echo -en "${PRECOLOUR}\n"|sed "s/Ready/${GREEN}Ready${RESTORE}/g"|sed "s/NotReady/${RED}NotReady${RESTORE}/g"|sed "s/Unknown/${RED}Unknown${RESTORE}/g"|sed "s/Pending/${MAGENTA}Pending${MAGENTA}/g"
+else
+  echo -en "${PRECOLOUR}"
+fi
