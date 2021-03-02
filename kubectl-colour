@@ -11,7 +11,7 @@ if [[ $@ == *"get pod"* ]]; then
   echo -en "${PRECOLOUR}\n"|sed "1s/\(.*\)/${BLUE}\1${RESTORE}/"|sed "s/Running/${GREEN}Running${RESTORE}/g"|sed "s/Evicted/${RED}Evicted${RESTORE}/g"|sed "s/Terminating/${MAGENTA}Terminating${RESTORE}/g"|sed "s/Unknown/${RED}Unknown${RESTORE}/g"|sed "s/Pending/${MAGENTA}Pending${MAGENTA}/g"|sed "s/ImagePullBackoff/${RED}ImagePullBackoff${RESTORE}/g"|sed "s/CrashLoopBackoff/${RED}CrashLoopBackoff${RESTORE}/g"|sed "s/ContainerCreating/${YELLOW}ContainerCreating${RESTORE}/g"
   exit 0
 elif [[ $@ == *"get node"* ]]; then
-  echo -en "${PRECOLOUR}\n"|sed "1s/\(.*\)/${BLUE}\1${RESTORE}/"|sed "s/Ready/${GREEN}Ready${RESTORE}/g"|sed "s/NotReady/${RED}NotReady${RESTORE}/g"|sed "s/Unknown/${RED}Unknown${RESTORE}/g"|sed "s/Pending/${MAGENTA}Pending${MAGENTA}/g"
+  echo -en "${PRECOLOUR}\n"|sed "1s/\(.*\)/${BLUE}\1${RESTORE}/"|sed "s/ Ready/ ${GREEN}Ready${RESTORE}/g"|sed "s/NotReady/${RED}NotReady${RESTORE}/g"|sed "s/Unknown/${RED}Unknown${RESTORE}/g"|sed "s/Pending/${MAGENTA}Pending${MAGENTA}/g"
 else
   echo -en "${PRECOLOUR}"
 fi
