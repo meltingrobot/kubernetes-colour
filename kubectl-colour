@@ -13,5 +13,5 @@ if [[ $@ == *"get pod"* ]]; then
 elif [[ $@ == *"get node"* ]]; then
   echo -en "${PRECOLOUR}\n"|sed "1s/\(.*\)/${BLUE}\1${RESTORE}/"|sed "s/ Ready/ ${GREEN}Ready${RESTORE}/g"|sed "s/NotReady/${RED}NotReady${RESTORE}/g"|sed "s/Unknown/${RED}Unknown${RESTORE}/g"|sed "s/Pending/${MAGENTA}Pending${RESTORE}/g"
 else
-  echo -en "${PRECOLOUR}\n"
+  echo -en "${PRECOLOUR}\n"|sed "1s/\(.*\)/${BLUE}\1${RESTORE}/"
 fi
