@@ -32,7 +32,7 @@ elif [[ $@ == *"get no"* ]]; then
 elif [[ $@ == *"get hpa"* ]]; then
   while read i; do
     if [[ "${i}" = NAME* ]]; then
-      echo "${i}"
+      echo "${BLUE}${i}${RESTORE}"
     else
       VAL1=$(echo ${i} | awk -F"[%/ ]+" '{print $4}')
       VAL2=$(echo ${i} | awk -F"[%/ ]+" '{print $5}')
