@@ -7,11 +7,11 @@ BLUE=$(echo -en '\033[00;34m')
 MAGENTA=$(echo -en '\033[00;35m')
 
 PRECOLOUR=`kubectl $@`
-if [[ $@ == *"get pod"* ]]; then
-  echo -en "${PRECOLOUR}\n"|sed "1s/\(.*\)/${BLUE}\1${RESTORE}/"|sed "s/Running/${GREEN}Running${RESTORE}/g"|sed "s/Evicted/${RED}Evicted${RESTORE}/g"|sed "s/Terminating/${MAGENTA}Terminating${RESTORE}/g"|sed "s/Unknown/${RED}Unknown${RESTORE}/g"|sed "s/Pending/${MAGENTA}Pending${MAGENTA}/g"|sed "s/ImagePullBackoff/${RED}ImagePullBackoff${RESTORE}/g"|sed "s/CrashLoopBackOff/${RED}CrashLoopBackOff${RESTORE}/g"|sed "s/ContainerCreating/${YELLOW}ContainerCreating${RESTORE}/g"|sed "s/Error/${RED}Error${RESTORE}/g"|sed "s/Completed/${MAGENTA}Completed${RESTORE}/g"
-  exit 0
-elif [[ $@ == *"get node"* ]]; then
-  echo -en "${PRECOLOUR}\n"|sed "1s/\(.*\)/${BLUE}\1${RESTORE}/"|sed "s/ Ready/ ${GREEN}Ready${RESTORE}/g"|sed "s/NotReady/${RED}NotReady${RESTORE}/g"|sed "s/Unknown/${RED}Unknown${RESTORE}/g"|sed "s/Pending/${MAGENTA}Pending${RESTORE}/g"
+if [[ $@ == *"get po"* ]]; then
+  sed -e "1s/\(.*\)/${BLUE}\1${RESTORE}/" -e "s/Running/${GREEN}Running${RESTORE}/g" -e "s/Evicted/${RED}Evicted${RESTORE}/g" -e "s/Terminating/${MAGENTA}Terminating${RESTORE}/g" -e "s/Unknown/${RED}Unknown${RESTORE}/g" -e "s/Pending/${MAGENTA}Pending${MAGENTA}/g" -e "s/ImagePullBackoff/${RED}ImagePullBackoff${RESTORE}/g" -e "s/CrashLoopBackOff/${RED}CrashLoopBackOff${RESTORE}/g" -e "s/ContainerCreating/${YELLOW}ContainerCreating${RESTORE}/g" -e "s/Error/${RED}Error${RESTORE}/g" -e "s/Completed/${MAGENTA}Completed${RESTORE}/g" <<<"${PRECOLOUR}"
+elif [[ $@ == *"get no"* ]]; then
+  sed -e "1s/\(.*\)/${BLUE}\1${RESTORE}/" -e "s/ Ready/ ${GREEN}Ready${RESTORE}/g" -e "s/NotReady/${RED}NotReady${RESTORE}/g" -e "s/Unknown/${RED}Unknown${RESTORE}/g" -e "s/Pending/${MAGENTA}Pending${RESTORE}/g" <<<"${PRECOLOUR}"
 else
-  echo -en "${PRECOLOUR}\n"|sed "1s/\(.*\)/${BLUE}\1${RESTORE}/"
+  sed -e "1s/\(.*\)/${BLUE}\1${RESTORE}/" <<<"${PRECOLOUR}"
 fi
+exit 0
