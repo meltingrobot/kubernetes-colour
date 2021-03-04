@@ -8,10 +8,30 @@ MAGENTA=$(echo -en '\033[00;35m')
 
 PRECOLOUR=`kubectl $@`
 if [[ $@ == *"get po"* ]]; then
-  sed -e "1s/\(.*\)/${BLUE}\1${RESTORE}/" -e "s/Running/${GREEN}Running${RESTORE}/g" -e "s/Evicted/${RED}Evicted${RESTORE}/g" -e "s/Terminating/${MAGENTA}Terminating${RESTORE}/g" -e "s/Unknown/${RED}Unknown${RESTORE}/g" -e "s/Pending/${MAGENTA}Pending${MAGENTA}/g" -e "s/ImagePullBackoff/${RED}ImagePullBackoff${RESTORE}/g" -e "s/CrashLoopBackOff/${RED}CrashLoopBackOff${RESTORE}/g" -e "s/ContainerCreating/${YELLOW}ContainerCreating${RESTORE}/g" -e "s/Error/${RED}Error${RESTORE}/g" -e "s/Completed/${MAGENTA}Completed${RESTORE}/g" <<<"${PRECOLOUR}"
+  sed \
+  -e "1s/\(.*\)/${BLUE}\1${RESTORE}/" \
+  -e "s/Running/${GREEN}Running${RESTORE}/g" \
+  -e "s/Evicted/${RED}Evicted${RESTORE}/g" \
+  -e "s/Terminating/${MAGENTA}Terminating${RESTORE}/g" \
+  -e "s/Unknown/${RED}Unknown${RESTORE}/g" \
+  -e "s/Pending/${MAGENTA}Pending${MAGENTA}/g" \
+  -e "s/ImagePullBackoff/${RED}ImagePullBackoff${RESTORE}/g" \
+  -e "s/CrashLoopBackOff/${RED}CrashLoopBackOff${RESTORE}/g" \
+  -e "s/ContainerCreating/${YELLOW}ContainerCreating${RESTORE}/g" \
+  -e "s/Error/${RED}Error${RESTORE}/g" \
+  -e "s/Completed/${MAGENTA}Completed${RESTORE}/g" \
+  <<<"${PRECOLOUR}"
 elif [[ $@ == *"get no"* ]]; then
-  sed -e "1s/\(.*\)/${BLUE}\1${RESTORE}/" -e "s/ Ready/ ${GREEN}Ready${RESTORE}/g" -e "s/NotReady/${RED}NotReady${RESTORE}/g" -e "s/Unknown/${RED}Unknown${RESTORE}/g" -e "s/Pending/${MAGENTA}Pending${RESTORE}/g" <<<"${PRECOLOUR}"
+  sed \
+  -e "1s/\(.*\)/${BLUE}\1${RESTORE}/" \
+  -e "s/ Ready/ ${GREEN}Ready${RESTORE}/g" \
+  -e "s/NotReady/${RED}NotReady${RESTORE}/g" \
+  -e "s/Unknown/${RED}Unknown${RESTORE}/g" \
+  -e "s/Pending/${MAGENTA}Pending${RESTORE}/g" \
+  <<<"${PRECOLOUR}"
 else
-  sed -e "1s/\(.*\)/${BLUE}\1${RESTORE}/" <<<"${PRECOLOUR}"
+  sed \
+  -e "1s/\(.*\)/${BLUE}\1${RESTORE}/" \
+  <<<"${PRECOLOUR}"
 fi
 exit 0
