@@ -29,6 +29,22 @@ elif [[ $@ == *"get no"* ]]; then
   -e "s/Unknown/${RED}Unknown${RESTORE}/g" \
   -e "s/Pending/${MAGENTA}Pending${RESTORE}/g" \
   <<<"${PRECOLOUR}"
+elif [[ $@ == *"get hpa"* ]]; then
+  while read i; do
+    if [[ "${i}" = NAME* ]]; then
+      echo "${i}"
+    else
+      VAL1=$(echo ${i} | awk -F"[%/ ]+" '{print $4}')
+      VAL2=$(echo ${i} | awk -F"[%/ ]+" '{print $5}')
+      if [[ "$VAL1" = *unknown* ]]; then
+        echo "${i}" | sed "s/${VAL1}\/${VAL2}\%/${YELLOW}${VAL1}\/${VAL2}\%${RESTORE}/g"
+      elif [ "$VAL1" -gt "$VAL2" ]; then
+        echo "${i}" | sed "s/${VAL1}\%\/${VAL2}\%/${RED}${VAL1}\%\/${VAL2}\%${RESTORE}/g"
+      else
+        echo "${i}" | sed "s/${VAL1}\%\/${VAL2}\%/${GREEN}${VAL1}\%\/${VAL2}\%${RESTORE}/g"
+      fi
+    fi
+  done <<<"${PRECOLOUR}"
 else
   sed \
   -e "1s/\(.*\)/${BLUE}\1${RESTORE}/" \
