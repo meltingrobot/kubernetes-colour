@@ -31,7 +31,9 @@ elif [[ $@ == *"get no"* ]]; then
   <<<"${PRECOLOUR}"
 elif [[ $@ == *"get hpa"* ]]; then
   while read i; do
-    if [[ "${i}" = NAME* ]]; then
+    if [ -z "${i}" ]; then
+      exit 0
+    elif [[ "${i}" = NAME* ]]; then
       echo "${BLUE}${i}${RESTORE}"
     else
       VAL1=$(echo ${i} | awk -F"[%/ ]+" '{print $4}')
